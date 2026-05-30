@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int countTriplet(vector<int>& arr) {
+        unordered_set<int> present(arr.begin(), arr.end());
+        set<vector<int>> triplets;
+
+        int n = arr.size();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int sum = arr[i] + arr[j];
+
+                if (present.count(sum)) {
+                    vector<int> temp = {arr[i], arr[j], sum};
+                    sort(temp.begin(), temp.end());
+                    triplets.insert(temp);
+                }
+            }
+        }
+
+        return triplets.size();
+    }
+};
