@@ -1,0 +1,27 @@
+int* greaterElement(int arr[], int n) {
+    vector<int> temp(arr, arr + n);
+    sort(temp.begin(), temp.end());
+
+    unordered_map<int, int> mp;
+
+    for (int i = 0; i < n; i++) {
+        int j = i + 1;
+
+        while (j < n && temp[j] == temp[i]) {
+            j++;
+        }
+
+        if (j < n)
+            mp[temp[i]] = temp[j];
+        else
+            mp[temp[i]] = -10000000;
+    }
+
+    int* ans = new int[n];
+
+    for (int i = 0; i < n; i++) {
+        ans[i] = mp[arr[i]];
+    }
+
+    return ans;
+}
