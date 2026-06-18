@@ -1,0 +1,25 @@
+class Solution {
+public:
+    long long solve(int arr[], int n) {
+        vector<int> a(arr, arr + n);
+        sort(a.begin(), a.end());
+
+        long long ans = 0;
+        long long processed = 0;
+
+        int i = 0;
+        while (i < n) {
+            int j = i;
+            while (j < n && a[j] == a[i]) j++;
+
+            long long freq = j - i;
+
+            ans += processed * freq;
+
+            processed += freq;
+            i = j;
+        }
+
+        return ans;
+    }
+};
