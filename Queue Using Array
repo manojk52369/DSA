@@ -1,0 +1,41 @@
+class myQueue {
+public:
+    int *arr;
+    int front, rear, capacity;
+
+    myQueue(int n) {
+        capacity = n;
+        arr = new int[n];
+        front = 0;
+        rear = 0;
+    }
+
+    bool isEmpty() {
+        return front == rear;
+    }
+
+    bool isFull() {
+        return rear - front == capacity;
+    }
+
+    void enqueue(int x) {
+        if (isFull()) return;
+        arr[rear % capacity] = x;
+        rear++;
+    }
+
+    void dequeue() {
+        if (isEmpty()) return;
+        front++;
+    }
+
+    int getFront() {
+        if (isEmpty()) return -1;
+        return arr[front % capacity];
+    }
+
+    int getRear() {
+        if (isEmpty()) return -1;
+        return arr[(rear - 1) % capacity];
+    }
+};
