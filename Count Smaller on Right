@@ -1,0 +1,59 @@
+class Solution {
+public:
+    void merge(vector<pair<int,int>> &arr, int low, int mid, int high,
+               vector<int> &ans) {
+
+        vector<pair<int,int>> temp;
+        int i = low, j = mid + 1;
+        int rightCount = 0;
+
+        while (i <= mid && j <= high) {
+            if (arr[j].first < arr[i].first) {
+                rightCount++;
+                temp.push_back(arr[j++]);
+            } else {
+                ans[arr[i].second] += rightCount;
+                temp.push_back(arr[i++]);
+            }
+        }
+
+        while (i <= mid) {
+            ans[arr[i].second] += rightCount;
+            temp.push_back(arr[i++]);
+        }
+
+        while (j <= high) {
+            temp.push_back(arr[j++]);
+        }
+
+        for (int k = low; k <= high; k++) {
+            arr[k] = temp[k - low];
+        }
+    }
+
+    void mergeSort(vector<pair<int,int>> &arr, int low, int high,
+                   vector<int> &ans) {
+        if (low >= high) return;
+
+        int mid = low + (high - low) / 2;
+
+        mergeSort(arr, low, mid, ans);
+        mergeSort(arr, mid + 1, high, ans);
+
+        merge(arr, low, mid, high, ans);
+    }
+
+    vector<int> lowerArray(vector<int> &arr) {
+        int n = arr.size();
+
+        vector<pair<int,int>> v;
+        for (int i = 0; i < n; i++)
+            v.push_back({arr[i], i});
+
+        vector<int> ans(n, 0);
+
+        mergeSort(v, 0, n - 1, ans);
+
+        return ans;
+    }
+};
