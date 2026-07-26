@@ -1,0 +1,30 @@
+#include <vector>
+#include <algorithm>
+#include <numeric>
+
+using namespace std;
+
+class Solution {
+public:
+    int maxCircularSum(vector<int>& arr) {
+        int totalSum = 0;
+        int maxNormal = arr[0], maxEndingHere = 0;
+        int minNormal = arr[0], minEndingHere = 0;
+        
+        for (int x : arr) {
+            totalSum += x;
+            
+            maxEndingHere = max(x, maxEndingHere + x);
+            maxNormal = max(maxNormal, maxEndingHere);
+            
+            minEndingHere = min(x, minEndingHere + x);
+            minNormal = min(minNormal, minEndingHere);
+        }
+        
+        if (maxNormal < 0) {
+            return maxNormal;
+        }
+        
+        return max(maxNormal, totalSum - minNormal);
+    }
+};
