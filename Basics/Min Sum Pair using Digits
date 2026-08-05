@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string minSum(vector<int>& arr) {
+        sort(arr.begin(), arr.end());
+        
+        string num1 = "", num2 = "";
+        
+        for (int i = 0; i < arr.size(); i++) {
+            if (i % 2 == 0) {
+                num1 += to_string(arr[i]);
+            } else {
+                num2 += to_string(arr[i]);
+            }
+        }
+        
+        string ans = "";
+        int i = num1.length() - 1;
+        int j = num2.length() - 1;
+        int carry = 0;
+        
+        while (i >= 0 || j >= 0 || carry) {
+            int sum = carry;
+            if (i >= 0) sum += num1[i--] - '0';
+            if (j >= 0) sum += num2[j--] - '0';
+            
+            ans += to_string(sum % 10);
+            carry = sum / 10;
+        }
+        
+        reverse(ans.begin(), ans.end());
+        
+        int start = 0;
+        while (start < ans.length() && ans[start] == '0') {
+            start++;
+        }
+        
+        if (start == ans.length()) return "0";
+        
+        return ans.substr(start);
+    }
+};
