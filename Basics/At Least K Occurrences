@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int firstElementKTime(vector<int>& arr, int k) {
+        unordered_map<int, int> counts;
+        
+        for (int num : arr) {
+            counts[num]++;
+            if (counts[num] == k) {
+                return num;
+            }
+        }
+        
+        return -1;
+    }
+};
