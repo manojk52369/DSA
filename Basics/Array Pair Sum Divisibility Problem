@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool canPairs(vector<int>& arr, int k) {
+        if (arr.size() % 2 != 0) return false;
+
+        vector<int> remFreq(k, 0);
+        for (int num : arr) {
+            int rem = num % k;
+            remFreq[rem]++;
+        }
+
+        for (int i = 0; i < k; i++) {
+            if (i == 0) {
+                if (remFreq[i] % 2 != 0) return false;
+            } 
+            else if (2 * i == k) {
+                if (remFreq[i] % 2 != 0) return false;
+            } 
+            else {
+                if (remFreq[i] != remFreq[k - i]) return false;
+            }
+        }
+
+        return true;
+    }
+};
