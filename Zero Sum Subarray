@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool subArrayExists(vector<int>& arr) {
+        unordered_set<int> seen_sums;
+        int prefix_sum = 0;
+
+        for (int num : arr) {
+            prefix_sum += num;
+
+            if (prefix_sum == 0 || seen_sums.find(prefix_sum) != seen_sums.end()) {
+                return true;
+            }
+
+            seen_sums.insert(prefix_sum);
+        }
+
+        return false;
+    }
+};
