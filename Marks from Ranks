@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> getMarks(vector<int> &l, vector<int> &r, vector<int> &rank) {
+        int n = l.size();
+        vector<int> pref(n);
+
+        pref[0] = r[0] - l[0] + 1;
+        for (int i = 1; i < n; i++) {
+            pref[i] = pref[i - 1] + (r[i] - l[i] + 1);
+        }
+
+        vector<int> ans;
+        ans.reserve(rank.size());
+
+        for (int q : rank) {
+            auto it = lower_bound(pref.begin(), pref.end(), q);
+            int idx = distance(pref.begin(), it);
+
+            int prev_count = (idx == 0) ? 0 : pref[idx - 1];
+            int offset = q - prev_count - 1;
+
+            ans.push_back(l[idx] + offset);
+        }
+
+        return ans;
+    }
+};
