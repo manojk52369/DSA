@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int maxCircularSum(vector<int> &arr) {
+        int total_sum = 0;
+        int max_normal = arr[0], current_max = 0;
+        int min_normal = arr[0], current_min = 0;
+        
+        for (int x : arr) {
+            total_sum += x;
+            
+            current_max += x;
+            if (current_max > max_normal) max_normal = current_max;
+            if (current_max < 0) current_max = 0;
+            
+            current_min += x;
+            if (current_min < min_normal) min_normal = current_min;
+            if (current_min > 0) current_min = 0;
+        }
+        
+        if (max_normal < 0) {
+            return max_normal;
+        }
+        
+        int max_circular = total_sum - min_normal;
+        
+        return max(max_normal, max_circular);
+    }
+};
